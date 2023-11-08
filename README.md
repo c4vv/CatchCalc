@@ -1,4 +1,4 @@
-# PokeMMO Riches Charm Calculator
+# PokeMMO Catch Chance Calculator
 
 **ACCESS THE WEBSITE [HERE](https://c4vv.github.io/CatchCalc/)**
 
