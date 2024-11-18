@@ -32,13 +32,11 @@ function updateCatchChance(){
   let pokemonRateValue = Number(pokemonRate.value);
   let statusRateValue = Number(statusRate.value);
 
-  let formula = ((3*100-2*hpValue)/(3*100))*pokemonRateValue*ballRateValue*statusRateValue;
-  let den = 0;
-  let num = 65535/Math.pow(255/formula,0.25);
-  let percent = Math.pow(num/65535,4);
-  console.log(formula);
-  console.log(num);
-
+  let x = Math.max(1, Math.floor(Math.floor((3 * 100 - 2 * hpValue) * Math.floor(pokemonRateValue * ballRateValue) / (3 * 100)) * statusRateValue));
+  let y = Math.floor(1048560 / Math.floor(Math.sqrt(Math.floor(Math.sqrt(16711680 / x)))));
+  let chance = y / 65536;
+  let percent = Math.pow(chance, 4);
+  console.log(x,y,chance,percent);
 
   document.getElementById("catch-chance").innerHTML =  (Math.round(percent * 10000) / 100)+"%";
 
