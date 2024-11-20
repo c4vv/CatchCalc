@@ -32,8 +32,12 @@ function updateCatchChance(){
   let pokemonRateValue = Number(pokemonRate.value);
   let statusRateValue = Number(statusRate.value);
 
-  let x = Math.max(1, Math.floor(Math.floor((3 * 100 - 2 * hpValue) * Math.floor(pokemonRateValue * ballRateValue) / (3 * 100)) * statusRateValue));
-  let y = Math.floor(1048560 / Math.floor(Math.sqrt(Math.floor(Math.sqrt(16711680 / x)))));
+  // with rounding to get to dragonfly cave's numbers
+  // let x = Math.max(1, Math.floor(Math.floor((3 * 100 - 2 * hpValue) * Math.floor(pokemonRateValue * ballRateValue) / (3 * 100)) * statusRateValue));
+  // let y = Math.floor(1048560 / Math.floor(Math.sqrt(Math.floor(Math.sqrt(16711680 / x)))));
+
+  let x = Math.max(1, (3 * 100 - 2 * hpValue) * (pokemonRateValue * ballRateValue) / (3 * 100) * statusRateValue);
+  let y = 1048560 / Math.sqrt(Math.sqrt(16711680 / x));
   let chance = y / 65536;
   let percent = Math.pow(chance, 4);
   console.log(x,y,chance,percent);
