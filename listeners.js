@@ -1,4 +1,6 @@
-function updateCatchChance(){
+import { POKEMON } from './pokemon.js';
+
+function updateCatchChance() {
   // hp, ball-rate, pokemon-rate, status-rate
   resetInvalid();
   console.log("update");
@@ -23,7 +25,7 @@ function updateCatchChance(){
   if(!(isNumeric(statusRate.value))){
     statusRate.classList.add('is-invalid');
     invalid = true;
-  }
+    }
   if(invalid){
     return
   }
@@ -40,9 +42,10 @@ function updateCatchChance(){
   let y = 1048560 / Math.sqrt(Math.sqrt(16711680 / x));
   let chance = y / 65536;
   let percent = Math.pow(chance, 4);
+  percent = Math.min(percent, 1); // Cap it at 100%
   console.log(x,y,chance,percent);
 
-  document.getElementById("catch-chance").innerHTML =  Math.min((Math.round(percent * 10000) / 100), 100)+"%";
+  document.getElementById("catch-chance").innerHTML =  (Math.round(percent * 10000) / 100)+"%";
 
 }
 
@@ -72,12 +75,49 @@ function resetInvalid(){
   (el) => el.classList.remove('is-invalid')
   );
 }
+
+function populatePokemonList(filter = '') {
+    const pokemonList = document.getElementById('pokemonList');
+    const selectedPokemonInput = document.getElementById('selectedPokemon');
+    const pokemonCatchRate = document.getElementById('pokemon-rate');
+
+    pokemonList.innerHTML = '';
+    const filteredPokemon = POKEMON.filter(pokemon =>
+        pokemon[0].name.toLowerCase().includes(filter.toLowerCase())
+    );
+    filteredPokemon.forEach(pokemon => {
+        const li = document.createElement('li');
+        li.textContent = pokemon[0].name;
+        li.className = 'dropdown-item-text';
+        li.style.cursor = 'pointer';
+        li.addEventListener('click', () => {
+            selectedPokemonInput.value = pokemon[0].name;
+            pokemonCatchRate.value = pokemon[0].catch_rate;
+            updateCatchChance();
+        });
+        pokemonList.appendChild(li);
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function(event) {
-  resetInvalid();
-  updateCatchChance();
-  document.querySelector('.btn')
-  .addEventListener('click', () => {
-      updateCatchChance();
-  });
-  console.log("test");
+    console.log("DOM Content Loaded");
+    resetInvalid();
+    updateCatchChance();
+
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            updateCatchChance();
+        });
+    });
+
+    const searchInput = document.getElementById('searchInput');
+
+    // Initial population of the list
+    populatePokemonList();
+
+    // Add event listener to filter the list based on input
+    searchInput.addEventListener('input', () => {
+        populatePokemonList(searchInput.value);
+    });
 });
