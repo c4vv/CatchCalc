@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     // Initialize Dropdowns
     populatePokemonDropdown();
-    initializeStatusDropdown()
+    initializeStatusDropdown();
 
     // Add event listener to filter the list based on input
     searchInput.addEventListener('input', () => {
