@@ -1,9 +1,10 @@
 import { POKEMON } from './pokemon.js';
+var activePokemon = POKEMON[132][0];
 
 function updateCatchChance() {
   // hp, ball-rate, pokemon-rate, status-rate
   resetInvalid();
-  console.log("update");
+  console.log("update catch chance");
   let invalid = false;
   let hp = document.getElementById('hp');
   let ballRate = document.getElementById('ball-rate');
@@ -43,7 +44,7 @@ function updateCatchChance() {
   let chance = y / 65536;
   let percent = Math.pow(chance, 4);
   percent = Math.min(percent, 1); // Cap it at 100%
-  console.log(x,y,chance,percent);
+  console.log(x,y,chance,percent,activePokemon.weight);
 
   document.getElementById("catch-chance").innerHTML =  (Math.round(percent * 10000) / 100)+"%";
 
@@ -91,6 +92,7 @@ function populatePokemonDropdown(filter = '') {
         li.className = 'dropdown-item-text';
         li.style.cursor = 'pointer';
         li.addEventListener('click', () => {
+            activePokemon = pokemon[0];
             selectedPokemonInput.value = pokemon[0].name;
             pokemonCatchRate.value = pokemon[0].catch_rate;
             updateCatchChance();

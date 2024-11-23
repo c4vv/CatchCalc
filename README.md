@@ -5,4 +5,6 @@
 A calculator to determine the probability of catching a Pokemon in PokeMMO.
 
 ### TODO
-* [ ] TBD
+* [ ] Learn and implement Alpha Tyranitar catch rate
+* [ ] Separate meaningfully different forms into separate pokemon.js entries
+* [ ] Implement False Swipe checkbox
