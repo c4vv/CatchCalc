@@ -85,11 +85,11 @@ function nestMult(level) {
 }
 
 function heavyMult(pokemon) {
-  if (pokemon.weight >= 300)
+  if (pokemon.weight >= 3000)
     return 4.0;
-  else if (pokemon.weight >= 200)
+  else if (pokemon.weight >= 2000)
     return 3.0;
-  else if (pokemon.weight >= 100)
+  else if (pokemon.weight >= 1000)
     return 2.0;
   return 1.0;
 }
