@@ -44,28 +44,37 @@
                 </div>
                 <input type="number" id="status-rate" class="form-control calc-update is-invalid" placeholder="" aria-label="Status Multiplier" value="2" aria-describedby="The input for ball catch rate">
             </div>
-            <div class="container mt-4">
-                <div class="input-group">
-                    <button class="btn btn-outline-secondary dropdown-toggle"
-                            type="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        Select Pokemon
-                    </button>
-                    <div class="dropdown-menu p-2">
-                        <input type="text"
-                               class="form-control mb-2"
-                               id="searchInput"
-                               placeholder="Search Pokemon">
-                        <ul id="pokemonList" class="list-unstyled mb-0">
-                            <!-- Pokemon list dynamically generated here -->
-                        </ul>
+
+            <div class="container">
+                <div class="row">
+                    <div class="input-group mb-3">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"> Select Pokemon </button>
+                        <div class="dropdown-menu p-2">
+                            <input type="text" class="form-control mb-3" id="searchInput" placeholder="Search Pokemon">
+                            <ul id="pokemonList" class="list-unstyled mb-0">
+                                <!-- Pokemon list dynamically generated here -->
+                            </ul>
+                        </div>
+                        <input type="text" class="form-control" placeholder="" id="selectedPokemon" disabled>
                     </div>
-                    <input type="text" class="form-control" placeholder="" id="selectedPokemon" disabled>
+                    <div class="input-group mb-3">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"> Status Condition </button>
+                        <div class="dropdown-menu p-2">
+                            <ul id="statusList" class="list-unstyled mb-0">
+                                <li class="dropdown-item-text">(x1.0) None</li>
+                                <li class="dropdown-item-text">(x1.5) Paralyzed</li>
+                                <li class="dropdown-item-text">(x1.5) Burned</li>
+                                <li class="dropdown-item-text">(x1.5) Poisoned</li>
+                                <li class="dropdown-item-text">(x1.5) Badly Poisoned</li>
+                                <li class="dropdown-item-text">(x2.0) Frozen</li>
+                                <li class="dropdown-item-text">(x2.0) Asleep</li>
+                            </ul>
+                        </div>
+                        <input type="text" class="form-control" placeholder="(x1.0) None" id="selectedStatus" disabled>
+                    </div>
                 </div>
             </div>
         </div>
-
         <br>
         <div class="row">
             <ul class="list-group mb-3 chance">
@@ -75,9 +84,6 @@
                     </div>
                     <span id="catch-chance"></span>
                 </li>
-                <button class="btn btn-primary" type="button">Calc</button>
-
-
             </ul>
         </div>
 

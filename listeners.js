@@ -76,7 +76,7 @@ function resetInvalid(){
   );
 }
 
-function populatePokemonList(filter = '') {
+function populatePokemonDropdown(filter = '') {
     const pokemonList = document.getElementById('pokemonList');
     const selectedPokemonInput = document.getElementById('selectedPokemon');
     const pokemonCatchRate = document.getElementById('pokemon-rate');
@@ -99,6 +99,23 @@ function populatePokemonList(filter = '') {
     });
 }
 
+function initializeStatusDropdown() {
+    const statusListParent = document.getElementById('statusList');
+    const statusList = statusListParent.querySelectorAll("li");
+    const selectedStatusInput = document.getElementById('selectedStatus');
+    const statusRate = document.getElementById('status-rate');
+
+    statusList.forEach(statusItem => {
+        statusItem.style.cursor = 'pointer';
+        var multiplier = parseFloat(statusItem.innerHTML.match(/\d\.\d/));
+        statusItem.addEventListener('click', () => {
+            selectedStatusInput.value = statusItem.innerHTML;
+            statusRate.value = multiplier;
+            updateCatchChance();
+        });
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function(event) {
     console.log("DOM Content Loaded");
     resetInvalid();
@@ -113,11 +130,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     const searchInput = document.getElementById('searchInput');
 
-    // Initial population of the list
-    populatePokemonList();
+    // Initialize Dropdowns
+    populatePokemonDropdown();
+    initializeStatusDropdown()
 
     // Add event listener to filter the list based on input
     searchInput.addEventListener('input', () => {
-        populatePokemonList(searchInput.value);
+        populatePokemonDropdown(searchInput.value);
     });
 });
