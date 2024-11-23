@@ -38,8 +38,12 @@ function lureMult() { // If you select this I assume you're fishing
   return 4;
 }
 
-function quickMult(turn) { // If you select this I assume it's turn 1
+function quickMult(turnsCompleted) { // If you select this I assume it's turn 1
   return 5;
+}
+
+function timerMult(turnsCompleted) {
+  return 1 + Math.min(3, turnsCompleted*0.3);
 }
 
 function levelMult() { // If you select this I assume you're the same level
@@ -93,3 +97,31 @@ function dreamMult(turnsAsleep) {
 function fastMult(pokemon) {
   return -1.0;
 }
+
+var POKEBALLS = [];
+POKEBALLS[1] = {"name": "Pokeball", "function": pokeMult};
+POKEBALLS[2] = {"name": "Great Ball", "function": greatMult};
+POKEBALLS[3] = {"name": "Ultra Ball", "function": ultraMult};
+POKEBALLS[4] = {"name": "Net Ball", "function": netMult};
+POKEBALLS[5] = {"name": "Timer Ball", "function": timerMult};
+POKEBALLS[6] = {"name": "Dusk Ball", "function": duskMult};
+POKEBALLS[7] = {"name": "Quick Ball", "function": quickMult};
+POKEBALLS[8] = {"name": "Love Ball", "function": loveMult};
+
+POKEBALLS[9] = {"name": "Cherish Ball", "function": cherishMult};
+POKEBALLS[10] = {"name": "Dive Ball", "function": diveMult};
+POKEBALLS[11] = {"name": "Dream Ball", "function": dreamMult};
+POKEBALLS[12] = {"name": "Fast Ball", "function": fastMult};
+POKEBALLS[13] = {"name": "Friend Ball", "function": friendMult};
+POKEBALLS[14] = {"name": "Heal Ball", "function": healMult};
+POKEBALLS[15] = {"name": "Heavy Ball", "function": heavyMult};
+POKEBALLS[16] = {"name": "Level Ball", "function": levelMult};
+POKEBALLS[17] = {"name": "Lure Ball", "function": lureMult};
+POKEBALLS[18] = {"name": "Luxury Ball", "function": luxuryMult};
+POKEBALLS[19] = {"name": "Moon Ball", "function": moonMult};
+POKEBALLS[20] = {"name": "Nest Ball", "function": nestMult};
+POKEBALLS[21] = {"name": "Premier Ball", "function": premierMult};
+POKEBALLS[22] = {"name": "Repeat Ball", "function": repeatMult};
+POKEBALLS[23] = {"name": "Safari Ball", "function": safariMult};
+
+export { POKEBALLS };

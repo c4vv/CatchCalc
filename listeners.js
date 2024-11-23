@@ -1,4 +1,6 @@
 import { POKEMON } from './pokemon.js';
+import { POKEBALLS } from './pokeballs.js';
+
 var activePokemon = POKEMON[132][0];
 
 function updateCatchChance() {
@@ -101,6 +103,29 @@ function populatePokemonDropdown(filter = '') {
     });
 }
 
+function populatePokeballDropdown(filter = '') {
+    const pokeballList = document.getElementById('pokeballList');
+    const selectedPokeballInput = document.getElementById('selectedPokeball');
+    const pokeballCatchRate = document.getElementById('ball-rate');
+
+    pokeballList.innerHTML = '';
+    const filteredPokeballs = POKEBALLS.filter(pokeball =>
+        pokeball.name.toLowerCase().includes(filter.toLowerCase())
+    );
+    filteredPokeballs.forEach(pokeball => {
+        const li = document.createElement('li');
+        li.textContent = pokeball.name;
+        li.className = 'dropdown-item-text';
+        li.style.cursor = 'pointer';
+        li.addEventListener('click', () => {
+            selectedPokeballInput.value = pokeball.name;
+            //pokemonCatchRate.value = pokemon[0].catch_rate;
+            updateCatchChance();
+        });
+        pokeballList.appendChild(li);
+    });
+}
+
 function initializeStatusDropdown() {
     const statusListParent = document.getElementById('statusList');
     const statusList = statusListParent.querySelectorAll("li");
@@ -129,15 +154,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
             updateCatchChance();
         });
     });
-
-    const searchInput = document.getElementById('searchInput');
+    
+    const searchPokemon = document.getElementById('searchPokemon');
+    const searchPokeballs = document.getElementById('searchPokeballs');
 
     // Initialize Dropdowns
     populatePokemonDropdown();
+    populatePokeballDropdown();
     initializeStatusDropdown();
 
     // Add event listener to filter the list based on input
-    searchInput.addEventListener('input', () => {
-        populatePokemonDropdown(searchInput.value);
+    searchPokemon.addEventListener('input', () => {
+        populatePokemonDropdown(searchPokemon.value);
+    });
+    searchPokeballs.addEventListener('input', () => {
+        populatePokeballDropdown(searchPokeballs.value);
     });
 });
