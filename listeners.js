@@ -113,6 +113,7 @@ function populatePokemonDropdown(filter = '') {
             // If the active Pokeball relies on the active Pokemon's stats, then update the ball value.
             if (activePokeball.parameter == "pokemon")
                 updateBallRate();
+            updateCatchChance();
         });
         pokemonList.appendChild(li);
     });
