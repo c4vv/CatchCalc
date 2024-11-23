@@ -42,7 +42,7 @@ function updateCatchChance(){
   let percent = Math.pow(chance, 4);
   console.log(x,y,chance,percent);
 
-  document.getElementById("catch-chance").innerHTML =  (Math.round(percent * 10000) / 100)+"%";
+  document.getElementById("catch-chance").innerHTML =  Math.min((Math.round(percent * 10000) / 100), 100)+"%";
 
 }
 
