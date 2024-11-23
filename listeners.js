@@ -2,6 +2,7 @@ import { POKEMON } from './pokemon.js';
 import { POKEBALLS } from './pokeballs.js';
 
 var activePokemon = POKEMON[132][0];
+var activePokeball = POKEBALLS[1];
 
 function updateCatchChance() {
   // hp, ball-rate, pokemon-rate, status-rate
@@ -79,15 +80,27 @@ function resetInvalid(){
   );
 }
 
+function updateBallRate() {
+    const pokeballCatchRate = document.getElementById('ball-rate');
+    if (activePokeball.parameter == "pokemon") {
+        pokeballCatchRate.value = activePokeball.function(activePokemon);
+    } else if (activePokeball.parameter == "None") {
+        pokeballCatchRate.value = activePokeball.function();
+    } else { // Parameterized pokeball
+        const existingInput = document.getElementById('deleteLaterInput');
+        pokeballCatchRate.value = activePokeball.function(parseInt(existingInput.value));
+    }
+    updateCatchChance();
+}
+
 function populatePokemonDropdown(filter = '') {
     const pokemonList = document.getElementById('pokemonList');
     const selectedPokemonInput = document.getElementById('selectedPokemon');
     const pokemonCatchRate = document.getElementById('pokemon-rate');
-
+    
+    // Filter the contents of pokeball list from search input
     pokemonList.innerHTML = '';
-    const filteredPokemon = POKEMON.filter(pokemon =>
-        pokemon[0].name.toLowerCase().includes(filter.toLowerCase())
-    );
+    const filteredPokemon = POKEMON.filter(pokemon => pokemon[0].name.toLowerCase().includes(filter.toLowerCase()));
     filteredPokemon.forEach(pokemon => {
         const li = document.createElement('li');
         li.textContent = pokemon[0].name;
@@ -97,32 +110,76 @@ function populatePokemonDropdown(filter = '') {
             activePokemon = pokemon[0];
             selectedPokemonInput.value = pokemon[0].name;
             pokemonCatchRate.value = pokemon[0].catch_rate;
-            updateCatchChance();
+            // If the active Pokeball relies on the active Pokemon's stats, then update the ball value.
+            if (activePokeball.parameter == "pokemon")
+                updateBallRate();
         });
         pokemonList.appendChild(li);
     });
 }
 
+function modifyPokeballParameterInput(pokeball) {
+    const existingPrepend = document.getElementById('deleteLaterPrepend');
+    const existingInput = document.getElementById('deleteLaterInput');
+    if (existingPrepend) {
+        existingPrepend.remove();
+        existingInput.remove();
+    }
+    
+    // Dynamically create an input box if needed for the selected Pokeball
+    const pokeballParameterInput = document.getElementById('parameterInput');
+    if (pokeball.parameter != "None" && pokeball.parameter != "pokemon") {
+        const parameterSpan = document.createElement('span');
+        parameterSpan.className = 'input-group-text';
+        parameterSpan.innerHTML = pokeball.parameter;
+        const parameterDiv = document.createElement('div');
+        parameterDiv.className = 'input-group-prepend';
+        parameterDiv.id = 'deleteLaterPrepend';
+        parameterDiv.appendChild(parameterSpan);
+        
+        const parameterInputBox = document.createElement('input');
+        parameterInputBox.className = 'form-control mb-3';
+        parameterInputBox.id = 'deleteLaterInput';
+        parameterInputBox.type = 'number';
+        if (pokeball.min)
+            parameterInputBox.min = pokeball.min;
+        if (pokeball.max)
+            parameterInputBox.max = pokeball.max;
+        parameterInputBox.value = pokeball.default;
+        parameterInputBox.addEventListener('input', () => {updateBallRate();});
+
+        pokeballParameterInput.appendChild(parameterDiv);
+        pokeballParameterInput.appendChild(parameterInputBox);
+    }
+}
+
 function populatePokeballDropdown(filter = '') {
     const pokeballList = document.getElementById('pokeballList');
     const selectedPokeballInput = document.getElementById('selectedPokeball');
-    const pokeballCatchRate = document.getElementById('ball-rate');
 
+    // Filter the contents of pokeball list from search input
     pokeballList.innerHTML = '';
-    const filteredPokeballs = POKEBALLS.filter(pokeball =>
-        pokeball.name.toLowerCase().includes(filter.toLowerCase())
-    );
+    const filteredPokeballs = POKEBALLS.filter(pokeball => pokeball.name.toLowerCase().includes(filter.toLowerCase()));
     filteredPokeballs.forEach(pokeball => {
         const li = document.createElement('li');
         li.textContent = pokeball.name;
         li.className = 'dropdown-item-text';
         li.style.cursor = 'pointer';
+        // Give each list option custom functionality defined by pokeballs.js
         li.addEventListener('click', () => {
             selectedPokeballInput.value = pokeball.name;
-            //pokemonCatchRate.value = pokemon[0].catch_rate;
-            updateCatchChance();
+            activePokeball = pokeball;
+            modifyPokeballParameterInput(pokeball);
+            updateBallRate();
         });
         pokeballList.appendChild(li);
+
+        // Add a separator between commonly used pokeballs and alphabetically sorted pokeballs
+        if (pokeball.name == "Love Ball"){
+            const separator = document.createElement('div');
+            separator.className = 'dropdown-divider';
+            pokeballList.appendChild(separator);
+        }
     });
 }
 
