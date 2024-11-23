@@ -2,6 +2,10 @@ function pokeMult() {
   return 1.0;
 }
 
+function luxuryMult() { // why
+  return 1.0;
+}
+
 function healMult() {
   return 1.25;
 }
