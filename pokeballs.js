@@ -42,8 +42,8 @@ function quickMult() { // If you select this it's assumed it's turn 1
   return 5.0;
 }
 
-function timerMult(turnsCompleted) {
-  return 1 + Math.min(3, turnsCompleted*0.3);
+function timerMult(turnNumber) {
+  return 1 + Math.min(3, (turnNumber-1)*0.3);
 }
 
 function levelMult() { // If you select this it's assumed you're the same level
@@ -109,7 +109,7 @@ POKEBALLS[1] = {"name": "Pokeball",         "function": pokeMult,       "paramet
 POKEBALLS[2] = {"name": "Great Ball",       "function": greatMult,      "parameter":"None",             "default":"",   "min":"",   "max":""};
 POKEBALLS[3] = {"name": "Ultra Ball",       "function": ultraMult,      "parameter":"None",             "default":"",   "min":"",   "max":""};
 POKEBALLS[4] = {"name": "Net Ball",         "function": netMult,        "parameter":"pokemon",          "default":"",   "min":"",   "max":""};
-POKEBALLS[5] = {"name": "Timer Ball",       "function": timerMult,      "parameter":"Turns Completed",  "default":"10", "min":"0",  "max":""};
+POKEBALLS[5] = {"name": "Timer Ball",       "function": timerMult,      "parameter":"Current Turn",  "default":"10", "min":"1",  "max":""};
 POKEBALLS[7] = {"name": "Quick Ball",       "function": quickMult,      "parameter":"None",             "default":"",   "min":"",   "max":""};
 POKEBALLS[6] = {"name": "Dusk Ball",        "function": duskMult,       "parameter":"None",             "default":"",   "min":"",   "max":""};
 POKEBALLS[8] = {"name": "Love Ball",        "function": loveMult,       "parameter":"None",             "default":"",   "min":"",   "max":""};
